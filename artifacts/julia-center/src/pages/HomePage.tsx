@@ -44,9 +44,8 @@ export default function HomePage() {
               مركز جوليا <br/>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">للعناية بالبشرة والليزر</span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-              أهلاً بكم في مركز جوليا، وجهتكم المتخصصة للعناية بالبشرة، الليزر، التجميل، التغذية والأظافر بخدمات احترافية ونتائج مميزة.
-            </p>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">وجهتكِ المتخصصة للجمال والعناية المتكاملة 
+            خدمات البشرة، الليزر، التغذية والأظافر بأحدث التقنيات ولمسة من الفخامة</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="rounded-full px-8 py-6 text-lg bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl w-full sm:w-auto transition-all">
                 <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
@@ -69,7 +68,6 @@ export default function HomePage() {
           </svg>
         </div>
       </section>
-
       {/* Departments Section */}
       <section id="departments" className="py-24 bg-background relative">
         <div className="container mx-auto px-4">
@@ -97,7 +95,6 @@ export default function HomePage() {
           </motion.div>
         </div>
       </section>
-
       {/* About Section */}
       <section id="about" className="py-24 relative overflow-hidden bg-accent/10">
         <div className="container mx-auto px-4">
@@ -109,7 +106,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Gallery Section */}
       <section className="py-24 bg-background">
         <div className="container mx-auto px-4">
@@ -136,7 +132,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Contact Section */}
       <section id="contact" className="py-24 bg-foreground text-background relative">
         <div className="container mx-auto px-4">
@@ -181,7 +176,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-background py-8 border-t border-border">
         <div className="container mx-auto px-4 text-center">
