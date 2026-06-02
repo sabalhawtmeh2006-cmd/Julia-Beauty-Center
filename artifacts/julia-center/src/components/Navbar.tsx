@@ -1,50 +1,66 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [location] = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false);
+    if (location === "/") {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/#${sectionId}`;
+    }
+  };
+
   const navLinks = [
-    { label: "الرئيسية", href: "/" },
-    { label: "أقسام المركز", href: "/#departments" },
-    { label: "من نحن", href: "/#about" },
-    { label: "خدماتنا وأسعارنا", href: "/#departments" },
-    { label: "موقعنا", href: "/#contact" },
-    { label: "تواصل معنا", href: "/#contact" },
+    { label: "الرئيسية", action: () => { setIsMobileMenuOpen(false); window.location.href = "/"; } },
+    { label: "أقسام المركز", action: () => scrollToSection("departments") },
+    { label: "من نحن", action: () => scrollToSection("about") },
+    { label: "خدماتنا وأسعارنا", action: () => scrollToSection("departments") },
+    { label: "موقعنا", action: () => scrollToSection("contact") },
+    { label: "تواصل معنا", action: () => scrollToSection("contact") },
   ];
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? "bg-background/80 backdrop-blur-md border-b border-white/20 shadow-sm" 
+        isScrolled
+          ? "bg-background/80 backdrop-blur-md border-b border-white/20 shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <span className="text-2xl font-bold text-primary tracking-wide">
-            J<span className="text-foreground">ulia</span>
-          </span>
+        <Link href="/" className="flex items-center">
+          <img
+            src="/julia-logo.png"
+            alt="مركز جوليا"
+            className="h-14 w-auto object-contain"
+            style={{ filter: isScrolled ? "none" : "none" }}
+          />
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            <Link key={link.label} href={link.href} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+            <button
+              key={link.label}
+              onClick={link.action}
+              className="text-sm font-medium text-foreground hover:text-primary transition-colors bg-transparent border-none cursor-pointer"
+            >
               {link.label}
-            </Link>
+            </button>
           ))}
           <Button asChild className="rounded-full px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
             <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
@@ -54,7 +70,7 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile Toggle */}
-        <button 
+        <button
           className="md:hidden p-2 text-foreground"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -66,14 +82,13 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-white/20 p-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
-            <Link 
-              key={link.label} 
-              href={link.href} 
-              className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <button
+              key={link.label}
+              onClick={link.action}
+              className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2 text-right bg-transparent border-none cursor-pointer w-full"
             >
               {link.label}
-            </Link>
+            </button>
           ))}
           <Button asChild className="w-full rounded-full mt-2 bg-primary hover:bg-primary/90 text-primary-foreground">
             <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
