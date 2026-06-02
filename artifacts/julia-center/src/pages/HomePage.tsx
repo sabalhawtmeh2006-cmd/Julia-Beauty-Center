@@ -54,7 +54,7 @@ export default function HomePage() {
               </Button>
               <Button asChild size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg border-primary/20 text-primary hover:bg-primary/5 w-full sm:w-auto transition-all bg-white/50 backdrop-blur-sm">
                 <Link href="#departments">
-                  أقسام المركز
+                  تصفحي الأقسام
                 </Link>
               </Button>
             </div>
