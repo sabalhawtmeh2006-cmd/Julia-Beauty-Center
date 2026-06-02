@@ -63,18 +63,42 @@ export default function DepartmentPage() {
 
         {/* Content */}
         {department.type === 'list' && (
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-          >
-            {department.services.map((service, idx) => (
-              <motion.div key={idx} variants={itemVariants}>
-                <ServiceCard name={service.name} price={service.price} />
-              </motion.div>
+          <>
+            <motion.div 
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+            >
+              {department.services.map((service, idx) => (
+                <motion.div key={idx} variants={itemVariants}>
+                  <ServiceCard name={service.name} price={service.price} subtitle={service.subtitle} />
+                </motion.div>
+              ))}
+            </motion.div>
+
+            {department.subsections && department.subsections.map((sub, sIdx) => (
+              <div key={sIdx} className="mt-16">
+                <div className="mb-10">
+                  <h2 className="text-2xl md:text-3xl font-black text-foreground">{sub.name}</h2>
+                  <div className="w-20 h-1 bg-primary mt-3 rounded-full opacity-70" />
+                </div>
+                <motion.div
+                  variants={containerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-80px" }}
+                  className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                >
+                  {sub.services.map((service, idx) => (
+                    <motion.div key={idx} variants={itemVariants}>
+                      <ServiceCard name={service.name} price={service.price} subtitle={service.subtitle} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </>
         )}
 
         {department.type === 'table' && department.tableCols && department.tableData && (

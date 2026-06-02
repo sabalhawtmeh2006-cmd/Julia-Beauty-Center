@@ -1,6 +1,12 @@
 export interface Service {
   name: string;
   price?: string;
+  subtitle?: string;
+}
+
+export interface Subsection {
+  name: string;
+  services: Service[];
 }
 
 export interface Department {
@@ -10,6 +16,7 @@ export interface Department {
   icon: string;
   description?: string;
   services: Service[];
+  subsections?: Subsection[];
   type?: 'list' | 'table';
   tableCols?: string[];
   tableData?: string[][];
@@ -23,19 +30,31 @@ export const departments: Department[] = [
     icon: "Sparkles",
     type: "list",
     services: [
-      { name: "هيدروفاشل" },
-      { name: "ديرمابن" },
-      { name: "ديرمابن مع بلازما" },
-      { name: "ديرمابن مع ميزوثيرابي" },
-      { name: "PRX-T33" },
-      { name: "تقشير الميلادين" },
-      { name: "تقشير الطحالب للوجه" },
-      { name: "تقشير الطحالب للجسم" },
-      { name: "تقشير TCA" },
-      { name: "توريد الشفايف" },
-      { name: "ميزو الشعر" },
-      { name: "فيلر تحت العين" },
-      { name: "بوتوكس" },
+      { name: "بلازما", price: "15 دينار" },
+      { name: "ديرمابن مع ميزوثيرابي", price: "25 دينار" },
+      { name: "هايدروفيشال مع ديرمابن وبلازما", price: "30 دينار" },
+      { name: "هايدروفيشال مع ديرمابن وميزو", price: "35 دينار" },
+      { name: "تقشير البيبي فيس", price: "35 دينار" },
+      { name: "التقشير الذكي PRX-T33", price: "45 دينار" },
+      { name: "تقشير الميلاين", price: "60 دينار" },
+      { name: "تقشير الطحالب للوجه", price: "25 دينار" },
+      { name: "تقشير الطحالب للجسم", price: "60 دينار" },
+      { name: "تقشير أصفر", price: "35 دينار" },
+      { name: "تقشير الـ TCA", price: "45 دينار" },
+    ],
+    subsections: [
+      {
+        name: "عروض قسم البشرة",
+        services: [
+          { name: "جلسة Skin Clear لحب الشباب", price: "25 دينار", subtitle: "3 جلسات: 60 دينار" },
+          { name: "جلسة ميزو تحت العين", price: "25 دينار", subtitle: "3 جلسات: 60 دينار" },
+          { name: "حقن بلازما", price: "40 دينار", subtitle: "3 جلسات: 110 دينار" },
+          { name: "توريد شفايف", price: "25 دينار", subtitle: "3 جلسات: 60 دينار" },
+          { name: "جلسة تفتيح ركب أو أكواع أو بكيني أو اندر آرم", price: "35 دينار" },
+          { name: "هايدروفيشال مع ديرمابن وبلازما + توريد شفايف", price: "40 دينار" },
+          { name: "ميزو الشعر", price: "35 دينار" },
+        ]
+      }
     ]
   },
   {
