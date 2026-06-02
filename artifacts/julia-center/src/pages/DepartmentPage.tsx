@@ -96,6 +96,14 @@ export default function DepartmentPage() {
                     </motion.div>
                   ))}
                 </motion.div>
+                {sub.note && (
+                  <div className="mt-6 flex items-start gap-3 bg-primary/8 border border-primary/20 rounded-2xl px-6 py-4">
+                    <span className="text-primary mt-0.5 shrink-0">✦</span>
+                    <p className="text-muted-foreground text-base leading-relaxed">
+                      <span className="font-semibold text-foreground">ملاحظة: </span>{sub.note}
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </>

@@ -7,6 +7,7 @@ export interface Service {
 export interface Subsection {
   name: string;
   services: Service[];
+  note?: string;
 }
 
 export interface Department {
@@ -80,11 +81,30 @@ export const departments: Department[] = [
     slug: "mesotherapy",
     icon: "Droplet",
     type: "list",
-    services: [
-      { name: "إبر النضارة للوجه" },
-      { name: "إبر النضارة للشعر" },
-      { name: "إبر الميزوثيرابي للجسم" },
-      { name: "كوكتيل النضارة" },
+    services: [],
+    subsections: [
+      {
+        name: "المجموعة الأولى",
+        note: "مدة الإبر المذكورة أعلاه سنة وأقل",
+        services: [
+          { name: "نيوفاوند نضارة", price: "100 دينار" },
+          { name: "نيوفاوند تفتيح", price: "120 دينار" },
+          { name: "بروفايلو", price: "120 دينار" },
+          { name: "سايتوكير", price: "95 دينار" },
+          { name: "سايتوكير (Sline)", price: "120 دينار" },
+          { name: "العنبر الرباعية", price: "180 دينار" },
+        ]
+      },
+      {
+        name: "المجموعة الثانية",
+        note: "مدة الإبر المذكورة أعلاه سنتين",
+        services: [
+          { name: "سكلبترا", price: "350 دينار" },
+          { name: "استافيل", price: "300 دينار" },
+          { name: "اوليديا", price: "280 دينار" },
+          { name: "اسبلا", price: "300 دينار" },
+        ]
+      }
     ]
   },
   {
