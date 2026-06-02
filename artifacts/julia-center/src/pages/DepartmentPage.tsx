@@ -1,21 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { departments } from "@/data/departments";
 import NotFound from "@/pages/not-found";
 import ServiceCard from "@/components/ServiceCard";
-import { ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { ChevronRight, X, ShoppingBag } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 export default function DepartmentPage() {
   const params = useParams();
   const slug = params.slug;
-  
+  const [lightboxImg, setLightboxImg] = useState<string | null>(null);
+
   const department = departments.find(d => d.slug === slug);
-  
-  // Scroll to top on mount
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  useEffect(() => {
+    if (lightboxImg) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [lightboxImg]);
 
   if (!department) {
     return <NotFound />;
@@ -23,19 +33,12 @@ export default function DepartmentPage() {
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 }
-    }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
   };
 
   return (
@@ -51,7 +54,7 @@ export default function DepartmentPage() {
             <ChevronRight size={20} className="ml-1" />
             العودة للرئيسية
           </Link>
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-black text-foreground"
@@ -61,10 +64,73 @@ export default function DepartmentPage() {
           <div className="w-24 h-1 bg-primary mt-6 rounded-full opacity-80" />
         </div>
 
-        {/* Content */}
+        {/* Packages Section (البكجات) */}
+        {department.packages && department.packages.length > 0 && (
+          <div className="mb-16">
+            <div className="flex items-center gap-3 mb-10">
+              <ShoppingBag className="text-primary" size={28} />
+              <div>
+                <h2 className="text-2xl md:text-3xl font-black text-foreground">البكجات</h2>
+                <div className="w-16 h-1 bg-primary mt-2 rounded-full opacity-70" />
+              </div>
+            </div>
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6"
+            >
+              {department.packages.map((pkg, idx) => (
+                <motion.div key={idx} variants={itemVariants}>
+                  <div className="bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.06)] hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(189,45,95,0.18)] transition-all duration-300 group">
+                    {/* Image */}
+                    <div
+                      className="relative cursor-pointer overflow-hidden"
+                      onClick={() => setLightboxImg(pkg.imageFile)}
+                      data-testid={`package-image-${idx}`}
+                    >
+                      <img
+                        src={pkg.imageFile}
+                        alt={pkg.name}
+                        className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ maxHeight: "320px", objectPosition: "top" }}
+                      />
+                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <span className="bg-white/90 text-primary font-bold px-4 py-2 rounded-full text-sm shadow">
+                          اضغطي لرؤية التفاصيل
+                        </span>
+                      </div>
+                    </div>
+                    {/* Info */}
+                    <div className="p-5">
+                      <h3 className="text-xl font-black text-foreground mb-3">{pkg.name}</h3>
+                      <div className="flex gap-4 mb-4">
+                        <div className="flex-1 bg-primary/8 rounded-xl p-3 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">الجلسة</p>
+                          <p className="font-bold text-primary text-lg">{pkg.pricePerSession}</p>
+                        </div>
+                        <div className="flex-1 bg-accent/20 rounded-xl p-3 text-center">
+                          <p className="text-xs text-muted-foreground mb-1">3 جلسات</p>
+                          <p className="font-bold text-foreground text-lg">{pkg.priceFor3}</p>
+                        </div>
+                      </div>
+                      <Button asChild className="rounded-full bg-primary hover:bg-primary/90 text-white w-full shadow-sm">
+                        <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
+                          احجزي الآن
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        )}
+
+        {/* List Content */}
         {department.type === 'list' && (
           <>
-            <motion.div 
+            <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
@@ -109,38 +175,90 @@ export default function DepartmentPage() {
           </>
         )}
 
+        {/* Table Content */}
         {department.type === 'table' && department.tableCols && department.tableData && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-6 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.04)] overflow-x-auto"
-          >
-            <table className="w-full text-right border-collapse">
-              <thead>
-                <tr>
-                  {department.tableCols.map((col, i) => (
-                    <th key={i} className="pb-4 px-4 text-lg font-bold text-foreground border-b border-border">
-                      {col}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {department.tableData.map((row, i) => (
-                  <tr key={i} className="group hover:bg-white/50 transition-colors">
-                    {row.map((cell, j) => (
-                      <td key={j} className={`py-4 px-4 border-b border-border/50 text-muted-foreground ${j===0 ? 'font-semibold text-foreground' : ''}`}>
-                        {cell}
-                      </td>
+          <>
+            {department.packages && department.packages.length > 0 && (
+              <div className="mb-6">
+                <h2 className="text-2xl md:text-3xl font-black text-foreground mb-2">المناطق الفردية</h2>
+                <div className="w-20 h-1 bg-primary rounded-full opacity-70 mb-8" />
+              </div>
+            )}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-white/40 backdrop-blur-md border border-white/40 rounded-3xl p-6 md:p-10 shadow-[0_8px_32px_rgba(0,0,0,0.04)] overflow-x-auto"
+            >
+              <table className="w-full text-right border-collapse">
+                <thead>
+                  <tr>
+                    {department.tableCols.map((col, i) => (
+                      <th key={i} className="pb-4 px-4 text-lg font-bold text-foreground border-b border-border">
+                        {col}
+                      </th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
+                </thead>
+                <tbody>
+                  {department.tableData.map((row, i) => (
+                    <tr key={i} className="group hover:bg-white/50 transition-colors">
+                      {row.map((cell, j) => (
+                        <td key={j} className={`py-4 px-4 border-b border-border/50 text-muted-foreground ${j === 0 ? 'font-semibold text-foreground' : ''}`}>
+                          {cell}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+            <div className="mt-8 text-center">
+              <Button asChild className="rounded-full bg-primary hover:bg-primary/90 text-white px-10 py-6 text-lg shadow-md">
+                <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
+                  احجزي الآن عبر واتساب
+                </a>
+              </Button>
+            </div>
+          </>
         )}
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            onClick={() => setLightboxImg(null)}
+            data-testid="lightbox-overlay"
+          >
+            <motion.div
+              initial={{ scale: 0.85, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.85, opacity: 0 }}
+              transition={{ type: "spring", damping: 25 }}
+              className="relative max-w-md w-full"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                className="absolute -top-4 -left-4 w-10 h-10 rounded-full bg-white text-foreground shadow-lg flex items-center justify-center z-10 hover:bg-primary hover:text-white transition-colors"
+                onClick={() => setLightboxImg(null)}
+                data-testid="lightbox-close"
+              >
+                <X size={18} />
+              </button>
+              <img
+                src={lightboxImg}
+                alt="تفاصيل البكج"
+                className="w-full rounded-3xl shadow-2xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

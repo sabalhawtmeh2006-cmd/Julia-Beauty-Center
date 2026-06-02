@@ -10,6 +10,13 @@ export interface Subsection {
   note?: string;
 }
 
+export interface LaserPackage {
+  name: string;
+  pricePerSession: string;
+  priceFor3: string;
+  imageFile: string;
+}
+
 export interface Department {
   id: string;
   name: string;
@@ -18,6 +25,7 @@ export interface Department {
   description?: string;
   services: Service[];
   subsections?: Subsection[];
+  packages?: LaserPackage[];
   type?: 'list' | 'table';
   tableCols?: string[];
   tableData?: string[][];
@@ -130,17 +138,34 @@ export const departments: Department[] = [
     type: "table",
     tableCols: ["اسم المنطقة", "سعر الجلسة", "سعر 3 جلسات"],
     tableData: [
-      ["وجه", "---", "---"],
-      ["رقبة", "---", "---"],
-      ["رقبة كاملة", "---", "---"],
-      ["صدر", "---", "---"],
-      ["بطن", "---", "---"],
-      ["ظهر", "---", "---"],
-      ["أكتاف", "---", "---"],
-      ["ذراعين", "---", "---"],
-      ["ساقين", "---", "---"],
-      ["إبطين", "---", "---"],
-      ["بيكيني", "---", "---"],
+      ["نصف ايدي", "8 دينار", "20 دينار"],
+      ["ايدي كاملة", "10 دينار", "25 دينار"],
+      ["أرجل كاملة", "15 دينار", "40 دينار"],
+      ["نصف أرجل", "12 دينار", "30 دينار"],
+      ["بكيني", "7 دينار", "18 دينار"],
+      ["إبط", "6 دينار", "15 دينار"],
+      ["وجه", "7 دينار", "18 دينار"],
+      ["شوارب", "2 دينار", "4 دينار"],
+    ],
+    packages: [
+      {
+        name: "توتال بدي",
+        pricePerSession: "40 دينار",
+        priceFor3: "100 دينار",
+        imageFile: "/laser-total-body.png",
+      },
+      {
+        name: "فل بدي",
+        pricePerSession: "30 دينار",
+        priceFor3: "75 دينار",
+        imageFile: "/laser-full-body.png",
+      },
+      {
+        name: "هاف بدي",
+        pricePerSession: "25 دينار",
+        priceFor3: "63 دينار",
+        imageFile: "/laser-half-body.png",
+      },
     ],
     services: []
   },
