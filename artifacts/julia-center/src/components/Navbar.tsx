@@ -46,7 +46,7 @@ export default function Navbar() {
           <img
             src="/julia-logo-transparent.png"
             alt="مركز جوليا"
-            className="h-24 w-auto object-contain"
+            className="h-32 w-auto object-contain"
           />
         </Link>
 
