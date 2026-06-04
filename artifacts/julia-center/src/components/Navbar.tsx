@@ -17,10 +17,12 @@ export default function Navbar() {
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
     if (location === "/") {
-      const el = document.getElementById(sectionId);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.location.href = `/#${sectionId}`;
+      navigate("/");
+      setTimeout(() => {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
     }
   };
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Switch, Route, Router as WouterRouter } from "wouter";
+import { Switch, Route, Router as WouterRouter, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,6 +11,17 @@ import Navbar from "@/components/Navbar";
 import FloatingButtons from "@/components/FloatingButtons";
 
 const queryClient = new QueryClient();
+
+// Redirects /departments to / on first page load (browser URL memory fix)
+function InitialRedirect() {
+  const [loc, nav] = useLocation();
+  useEffect(() => {
+    if (loc === "/departments") {
+      nav("/", { replace: true });
+    }
+  }, []);
+  return null;
+}
 
 function Router() {
   return (
@@ -33,6 +44,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+          <InitialRedirect />
           <div className="min-h-[100dvh] flex flex-col bg-background font-sans overflow-x-hidden relative">
             <Navbar />
             <main className="flex-1">
