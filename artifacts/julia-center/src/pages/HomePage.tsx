@@ -1,29 +1,16 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { MapPin, Phone, Instagram, Facebook, Star, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Instagram, Facebook, Clock } from "lucide-react";
+import FeedbackModal from "@/components/FeedbackModal";
 
 export default function HomePage() {
-  const [rating, setRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0);
-  const [reviewName, setReviewName] = useState("");
-  const [reviewText, setReviewText] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmitReview = () => {
-    if (!rating) return;
-    const stars = "⭐".repeat(rating);
-    const name = reviewName.trim() || "زبونة كريمة";
-    const text = reviewText.trim();
-    const msg = encodeURIComponent(
-      `تقييم جديد من ${name}\n${stars} (${rating}/5)\n${text ? `\nالتعليق: ${text}` : ""}`
-    );
-    window.open(`https://wa.me/962770754031?text=${msg}`, "_blank");
-    setSubmitted(true);
-  };
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
 
   return (
     <div className="flex flex-col w-full">
+      <FeedbackModal open={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
+
       {/* Hero Section */}
       <section className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden pt-28">
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-background via-accent/30 to-primary/10" />
@@ -48,14 +35,11 @@ export default function HomePage() {
               أهلاً بكم في مركز جوليا، وجهتكم المتخصصة للعناية بالبشرة، الليزر، التجميل، التغذية والأظافر بخدمات احترافية ونتائج مميزة.
             </p>
 
-            {/* Buttons — feedback first */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
               <Button
                 size="lg"
                 className="rounded-full px-8 py-5 text-base sm:text-lg bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-xl w-full sm:w-auto transition-all"
-                onClick={() => {
-                  document.getElementById("feedback")?.scrollIntoView({ behavior: "smooth" });
-                }}
+                onClick={() => setFeedbackOpen(true)}
               >
                 ⭐ اتركي تقييمك
               </Button>
@@ -144,117 +128,6 @@ export default function HomePage() {
                 <p className="text-base font-medium text-white">امسح الكود لزيارة موقع المركز</p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feedback / Rating Section */}
-      <section id="feedback" className="py-16 md:py-24 bg-background relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 md:w-[400px] md:h-[400px] bg-primary/5 rounded-full blur-[80px] -z-10" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 md:w-[500px] md:h-[500px] bg-accent/10 rounded-full blur-[100px] -z-10" />
-        <div className="container mx-auto px-5">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-5xl font-bold text-foreground mb-3">اتركي تقييمك</h2>
-            <div className="w-20 h-1 bg-primary mx-auto rounded-full opacity-80" />
-            <p className="text-muted-foreground mt-3 text-base md:text-lg">رأيك يهمنا — شاركينا تجربتك مع مركز جوليا</p>
-          </div>
-
-          <div className="max-w-xl mx-auto">
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white/50 backdrop-blur-md border border-white/40 rounded-3xl p-8 md:p-12 text-center shadow-xl"
-              >
-                <div className="text-5xl mb-4">🌸</div>
-                <h3 className="text-2xl font-black text-foreground mb-2">شكراً لك!</h3>
-                <p className="text-muted-foreground text-lg">تم إرسال تقييمك، نقدّر ثقتك بمركز جوليا.</p>
-                <Button
-                  className="mt-6 rounded-full bg-primary text-white px-8"
-                  onClick={() => { setSubmitted(false); setRating(0); setReviewName(""); setReviewText(""); }}
-                >
-                  إرسال تقييم آخر
-                </Button>
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white/50 backdrop-blur-md border border-white/40 rounded-3xl p-6 md:p-10 shadow-xl"
-              >
-                {/* Star Rating */}
-                <div className="text-center mb-7">
-                  <p className="text-foreground font-bold text-lg mb-4">كيف كانت تجربتك؟</p>
-                  <div className="flex justify-center gap-3">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <button
-                        key={star}
-                        onClick={() => setRating(star)}
-                        onMouseEnter={() => setHoverRating(star)}
-                        onMouseLeave={() => setHoverRating(0)}
-                        className="transition-transform hover:scale-125 active:scale-110 touch-manipulation"
-                      >
-                        <Star
-                          size={42}
-                          className={`transition-colors ${
-                            star <= (hoverRating || rating)
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "text-muted-foreground/25"
-                          }`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                  {rating > 0 && (
-                    <motion.p
-                      key={rating}
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-primary font-bold mt-2 text-base"
-                    >
-                      {["", "ضعيف", "مقبول", "جيد", "جيد جداً", "ممتاز! 🌟"][rating]}
-                    </motion.p>
-                  )}
-                </div>
-
-                {/* Name */}
-                <div className="mb-4">
-                  <label className="block text-foreground font-semibold mb-2 text-sm">اسمك (اختياري)</label>
-                  <input
-                    type="text"
-                    value={reviewName}
-                    onChange={e => setReviewName(e.target.value)}
-                    placeholder="مثال: سارة"
-                    className="w-full rounded-xl border border-border bg-white/60 px-4 py-3 text-right text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  />
-                </div>
-
-                {/* Comment */}
-                <div className="mb-6">
-                  <label className="block text-foreground font-semibold mb-2 text-sm">تعليقك (اختياري)</label>
-                  <textarea
-                    value={reviewText}
-                    onChange={e => setReviewText(e.target.value)}
-                    placeholder="شاركينا تجربتك مع خدماتنا..."
-                    rows={3}
-                    className="w-full rounded-xl border border-border bg-white/60 px-4 py-3 text-right text-foreground text-base placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"
-                  />
-                </div>
-
-                <Button
-                  onClick={handleSubmitReview}
-                  disabled={!rating}
-                  className="w-full rounded-full bg-primary hover:bg-primary/90 text-white py-5 text-base font-bold shadow-md disabled:opacity-40"
-                >
-                  <Send size={16} className="ml-2" />
-                  إرسال التقييم عبر واتساب
-                </Button>
-                {!rating && (
-                  <p className="text-center text-muted-foreground text-xs mt-3">اختاري عدد النجوم أولاً</p>
-                )}
-              </motion.div>
-            )}
           </div>
         </div>
       </section>
