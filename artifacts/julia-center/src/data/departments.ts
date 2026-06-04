@@ -75,11 +75,9 @@ export const departments: Department[] = [
     icon: "Syringe",
     type: "list",
     services: [
-      { name: "بوتوكس (اليرجان)", price: "100 دينار" },
+      { name: "بوتوكس (اليرجان)", price: "100 دينار", subtitle: "الكشرة - الجبين - عند العين" },
       { name: "فيلر توسيال منطقة تحت العين", price: "120 دينار" },
-      { name: "فيلر شفاه نوع فيلمد", price: "100 دينار" },
-      { name: "فيلر خطوط ابتسامة نوع فيلمد", price: "100 دينار" },
-      { name: "فيلر خدود نوع فيلمد", price: "100 دينار" },
+      { name: "إبرة فيلر", price: "100 دينار" },
       { name: "بلوريال سيلك - إبرة الحرير", price: "180 دينار" },
     ]
   },
@@ -149,22 +147,22 @@ export const departments: Department[] = [
     ],
     packages: [
       {
-        name: "توتال بدي",
-        pricePerSession: "40 دينار",
-        priceFor3: "100 دينار",
-        imageFile: "/laser-total-body.png",
-      },
-      {
         name: "فل بدي",
         pricePerSession: "30 دينار",
         priceFor3: "75 دينار",
-        imageFile: "/laser-full-body.png",
+        imageFile: "/full-body.png",
+      },
+      {
+        name: "توتال بدي",
+        pricePerSession: "40 دينار",
+        priceFor3: "100 دينار",
+        imageFile: "/total-body.png",
       },
       {
         name: "هاف بدي",
         pricePerSession: "25 دينار",
         priceFor3: "63 دينار",
-        imageFile: "/laser-half-body.png",
+        imageFile: "/half-body.png",
       },
     ],
     services: []
