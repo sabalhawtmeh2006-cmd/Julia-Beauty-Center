@@ -25,9 +25,9 @@ export default function HomePage() {
             <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-5">
               وجهتك الأولى للجمال في الزرقاء
             </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-foreground mb-5 leading-tight tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-foreground mb-5 leading-normal tracking-tight">
               مركز جوليا <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+              <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent leading-normal py-1">
                 للعناية بالبشرة والليزر
               </span>
             </h1>

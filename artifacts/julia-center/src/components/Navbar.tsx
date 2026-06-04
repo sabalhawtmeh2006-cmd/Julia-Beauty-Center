@@ -41,10 +41,6 @@ export default function Navbar() {
       label: "تواصل معنا",
       action: () => scrollToSection("contact")
     },
-    {
-      label: "تقييمك يهمنا",
-      action: () => scrollToSection("feedback")
-    },
   ];
 
   return (
