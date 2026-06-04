@@ -41,13 +41,12 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+      <div className="container mx-auto px-4 md:px-6 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <img
-            src="/julia-logo.png"
+            src="/julia-logo-new.jpg"
             alt="مركز جوليا"
-            className="h-14 w-auto object-contain"
-            style={{ filter: isScrolled ? "none" : "none" }}
+            className="h-20 w-auto object-contain rounded-2xl shadow-md"
           />
         </Link>
 
