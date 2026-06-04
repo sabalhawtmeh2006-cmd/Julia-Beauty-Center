@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Link } from "wouter";
-import { departments } from "@/data/departments";
-import DepartmentCard from "@/components/DepartmentCard";
 import { MapPin, Phone, Instagram, Facebook, Star, Clock, Send } from "lucide-react";
 
 export default function HomePage() {
@@ -12,16 +9,6 @@ export default function HomePage() {
   const [reviewName, setReviewName] = useState("");
   const [reviewText, setReviewText] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
 
   const handleSubmitReview = () => {
     if (!rating) return;
@@ -87,28 +74,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Departments Section */}
-      <section id="departments" className="py-24 bg-background relative">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">أقسام المركز</h2>
-            <div className="w-24 h-1 bg-primary mx-auto rounded-full opacity-80" />
-          </div>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
-          >
-            {departments.map((dept) => (
-              <motion.div key={dept.id} variants={itemVariants}>
-                <DepartmentCard name={dept.name} slug={dept.slug} iconName={dept.icon} />
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
       {/* About Section */}
       <section id="about" className="py-24 relative overflow-hidden bg-accent/10">

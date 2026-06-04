@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -25,23 +25,38 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { label: "الرئيسية", action: () => { setIsMobileMenuOpen(false); window.location.href = "/"; } },
-    { label: "أقسام المركز", action: () => scrollToSection("departments") },
-    { label: "من نحن", action: () => scrollToSection("about") },
-    { label: "خدماتنا وأسعارنا", action: () => scrollToSection("departments") },
-    { label: "موقعنا", action: () => scrollToSection("contact") },
-    { label: "تواصل معنا", action: () => scrollToSection("contact") },
+    {
+      label: "الرئيسية",
+      action: () => { setIsMobileMenuOpen(false); navigate("/"); }
+    },
+    {
+      label: "خدمات المركز",
+      action: () => { setIsMobileMenuOpen(false); navigate("/departments"); }
+    },
+    {
+      label: "من نحن",
+      action: () => scrollToSection("about")
+    },
+    {
+      label: "تواصل معنا",
+      action: () => scrollToSection("contact")
+    },
+    {
+      label: "تقييمك يهمنا",
+      action: () => scrollToSection("feedback")
+    },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/80 backdrop-blur-md border-b border-white/20 shadow-sm"
+          ? "bg-background/85 backdrop-blur-md border-b border-white/20 shadow-sm"
           : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 md:px-6 h-24 flex items-center justify-between">
+        {/* Logo */}
         <Link href="/" className="flex items-center">
           <img
             src="/julia-logo-transparent.png"
@@ -51,12 +66,17 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-5">
           {navLinks.map((link) => (
             <button
               key={link.label}
               onClick={link.action}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors bg-transparent border-none cursor-pointer"
+              className={`text-sm font-semibold transition-colors bg-transparent border-none cursor-pointer px-1 py-0.5 border-b-2 ${
+                (link.label === "خدمات المركز" && location === "/departments") ||
+                (link.label === "الرئيسية" && location === "/")
+                  ? "text-primary border-primary"
+                  : "text-foreground hover:text-primary border-transparent"
+              }`}
             >
               {link.label}
             </button>
@@ -79,12 +99,12 @@ export default function Navbar() {
 
       {/* Mobile Nav */}
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-20 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-white/20 p-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-2">
+        <div className="md:hidden absolute top-24 left-0 right-0 bg-background/95 backdrop-blur-md border-b border-white/20 p-4 flex flex-col gap-3 shadow-lg animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
             <button
               key={link.label}
               onClick={link.action}
-              className="text-lg font-medium text-foreground hover:text-primary transition-colors py-2 text-right bg-transparent border-none cursor-pointer w-full"
+              className="text-lg font-semibold text-foreground hover:text-primary transition-colors py-2 text-right bg-transparent border-none cursor-pointer w-full"
             >
               {link.label}
             </button>

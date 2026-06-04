@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/HomePage";
+import DepartmentsPage from "@/pages/DepartmentsPage";
 import DepartmentPage from "@/pages/DepartmentPage";
 import Navbar from "@/components/Navbar";
 import FloatingButtons from "@/components/FloatingButtons";
@@ -15,6 +16,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
+      <Route path="/departments" component={DepartmentsPage} />
       <Route path="/departments/:slug" component={DepartmentPage} />
       <Route component={NotFound} />
     </Switch>
