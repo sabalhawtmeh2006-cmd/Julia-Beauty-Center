@@ -44,9 +44,9 @@ export default function Navbar() {
       <div className="container mx-auto px-4 md:px-6 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <img
-            src="/julia-logo-new.jpg"
+            src="/julia-logo-transparent.png"
             alt="مركز جوليا"
-            className="h-20 w-auto object-contain rounded-2xl shadow-md"
+            className="h-24 w-auto object-contain"
           />
         </Link>
 
