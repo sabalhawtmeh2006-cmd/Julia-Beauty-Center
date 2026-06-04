@@ -18,7 +18,7 @@ export default function DepartmentCard({ name, slug, iconName }: DepartmentCardP
         <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
           <IconComponent size={32} strokeWidth={1.5} />
         </div>
-        <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{name}</h3>
+ <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">{name}</h3>
       </div>
     </Link>
   );

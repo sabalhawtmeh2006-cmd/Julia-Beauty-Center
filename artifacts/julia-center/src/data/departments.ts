@@ -70,7 +70,7 @@ export const departments: Department[] = [
   },
   {
     id: "2",
-    name: "التجميل الإجرائي",
+    name: "التجميل الاجراحي",
     slug: "filler-botox",
     icon: "Syringe",
     type: "list",
