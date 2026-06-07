@@ -26,9 +26,10 @@ export interface Department {
   services: Service[];
   subsections?: Subsection[];
   packages?: LaserPackage[];
-  type?: 'list' | 'table';
+  type?: 'list' | 'table' | 'gallery';
   tableCols?: string[];
   tableData?: string[][];
+  galleryImages?: string[];
 }
 
 export const departments: Department[] = [
@@ -184,6 +185,31 @@ export const departments: Department[] = [
       ["أكتاف", "15 دينار"],
     ],
     services: []
+  },
+  {
+    id: "8",
+    name: "الأسنان",
+    slug: "dental",
+    icon: "Smile",
+    type: "gallery",
+    services: [],
+    galleryImages: [
+      "/dental/d1.png",
+      "/dental/d2.png",
+      "/dental/d3.png",
+      "/dental/d4.png",
+      "/dental/d5.png",
+      "/dental/d6.png",
+      "/dental/d7.png",
+      "/dental/d8.png",
+      "/dental/d9.png",
+      "/dental/d10.png",
+      "/dental/d11.png",
+      "/dental/d12.png",
+      "/dental/d13.png",
+      "/dental/d14.png",
+      "/dental/d15.png",
+    ]
   },
   {
     id: "7",

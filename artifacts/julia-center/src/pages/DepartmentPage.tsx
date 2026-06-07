@@ -3,7 +3,7 @@ import { useParams, Link } from "wouter";
 import { departments } from "@/data/departments";
 import NotFound from "@/pages/not-found";
 import ServiceCard from "@/components/ServiceCard";
-import { ChevronRight, X, ShoppingBag } from "lucide-react";
+import { ChevronRight, X, ShoppingBag, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -173,6 +173,58 @@ export default function DepartmentPage() {
               </div>
             ))}
           </>
+        )}
+
+        {/* Gallery Content (dental) */}
+        {department.type === 'gallery' && department.galleryImages && (
+          <div>
+            {/* Contact banner */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 bg-primary/8 border border-primary/20 rounded-3xl px-8 py-6"
+            >
+              <div className="text-center sm:text-right">
+                <p className="text-xl font-bold text-foreground mb-1">للاستفسار عن تفاصيل الخدمات</p>
+                <p className="text-muted-foreground">تواصلي معنا مباشرة عبر واتساب وسيسعدنا الإجابة على كل أسئلتك</p>
+              </div>
+              <Button asChild className="shrink-0 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-5 text-lg shadow-md gap-3 flex items-center">
+                <a href="https://wa.me/962770754031" target="_blank" rel="noopener noreferrer">
+                  <MessageCircle size={22} />
+                  تواصلي معنا
+                </a>
+              </Button>
+            </motion.div>
+
+            {/* Image grid */}
+            <motion.div
+              variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.07 } } }}
+              initial="hidden"
+              animate="visible"
+              className="columns-2 sm:columns-3 lg:columns-4 gap-4 space-y-4"
+            >
+              {department.galleryImages.map((img, idx) => (
+                <motion.div
+                  key={idx}
+                  variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.4 } } }}
+                  className="break-inside-avoid"
+                >
+                  <button
+                    className="w-full block overflow-hidden rounded-3xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_32px_rgba(189,45,95,0.18)] transition-all duration-300 hover:scale-[1.02] focus:outline-none group"
+                    onClick={() => setLightboxImg(img)}
+                  >
+                    <img
+                      src={img}
+                      alt={`نتيجة أسنان ${idx + 1}`}
+                      className="w-full object-cover rounded-3xl group-hover:brightness-105 transition-all duration-300"
+                      loading="lazy"
+                    />
+                  </button>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         )}
 
         {/* Table Content */}
